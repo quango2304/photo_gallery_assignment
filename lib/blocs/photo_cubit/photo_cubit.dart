@@ -1,17 +1,18 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:photo_gallery_assignment/injectable.dart';
 import 'package:photo_gallery_assignment/models/photo_model.dart';
 import 'package:photo_gallery_assignment/repositories/photo_repository.dart';
 
 part 'photo_state.dart';
 
 class PhotoCubit extends Cubit<PhotosState> {
-  final PhotoRepositoryProtocol photoRepository;
+  PhotoRepositoryProtocol get photoRepository => getIt.get<PhotoRepositoryProtocol>();
   static const limit = 20;
   bool canLoadMore = true;
   int currentPage = 0;
 
-  PhotoCubit(this.photoRepository) : super(const PhotosInitial([]));
+  PhotoCubit() : super(const PhotosInitial([]));
 
   void loadPhotos() async {
     if (state is PhotosLoading || canLoadMore == false) {

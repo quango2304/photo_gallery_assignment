@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 import 'dart:convert';
 
 import 'package:photo_gallery_assignment/models/photo_model.dart';
@@ -7,6 +8,7 @@ abstract class PhotoRepositoryProtocol {
   Future<List<PhotoModel>> loadPhotos(int page, int limit);
 }
 
+@Injectable(as: PhotoRepositoryProtocol)
 class PhotoRepository extends PhotoRepositoryProtocol {
   @override
   Future<List<PhotoModel>> loadPhotos(int page, int limit) async {

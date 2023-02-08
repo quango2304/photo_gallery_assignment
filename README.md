@@ -1,16 +1,13 @@
-# photo_gallery_assignment
+# Flutter Photo Gallery App
+A beautiful and user-friendly photo gallery app built with Flutter. This app allows you to view photos from a public API.
 
-A Flutter project for the assignment about photo gallery
+## Key Features
+- Easy and intuitive navigation
+- Support for high-resolution photo viewing
 
-## Getting Started
+## Google Sign In
+With the added support for Google Sign In, accessing and using the app has never been easier. Simply log in with your Google account, and all your information will be securely stored and available on any device you use.
 
-This project is a starting point for a Flutter application.
+## Note
+At this time, users can only view photos from the public API. Future updates will allow for photo uploads, photo sharing and storage.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
