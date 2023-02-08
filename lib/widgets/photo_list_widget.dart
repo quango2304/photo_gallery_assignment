@@ -9,9 +9,9 @@ class PhotoListWidget extends StatelessWidget {
   final ScrollController? controller;
   final paddingHorizontal = 16.0;
   final List<PhotoModel> photos;
-  final Function(PhotoModel photo) onPressBookMark;
+  final Widget Function(PhotoModel photoModel) bookmarkIcon;
 
-  const PhotoListWidget({Key? key, this.controller, required this.photos, required this.onPressBookMark})
+  const PhotoListWidget({Key? key, this.controller, required this.photos, required this.bookmarkIcon})
       : super(key: key);
 
   void _gotoPhotoDetailView(PhotoModel photo, BuildContext context) {
@@ -52,15 +52,7 @@ class PhotoListWidget extends StatelessWidget {
                 Positioned(
                   bottom: 16,
                   right: 16,
-                  child: GestureDetector(
-                    child: const Icon(
-                      Icons.bookmark_border,
-                      size: 30,
-                    ),
-                    onTap: () {
-                      onPressBookMark(photo);
-                    },
-                  ),
+                  child: bookmarkIcon(photo),
                 )
               ],
             ),

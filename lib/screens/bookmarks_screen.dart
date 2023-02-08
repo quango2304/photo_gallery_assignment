@@ -42,16 +42,23 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                 ),
               ],
               child: BlocBuilder<BookmarksCubit, BookmarksState>(
-                builder: (_, photosState) {
-                  final bookmarks = photosState.bookmarks;
+                builder: (_, bookmarksState) {
+                  final bookmarks = bookmarksState.bookmarks;
                   if (bookmarks.isEmpty) {
-                    return const Center(child: CupertinoActivityIndicator());
+                    return Center(child: CupertinoActivityIndicator());
                   }
                   return PhotoListWidget(
                     photos: bookmarks,
-                    onPressBookMark: (bookmark) {
-                      bookmarksBloc.removeBookmark(bookmark as BookmarkModel, authState.currentUser!.id);
-                    },
+                    bookmarkIcon: (bookmark) => CupertinoButton(
+                      onPressed: () {
+                        bookmarksBloc.removeBookmark(bookmark as BookmarkModel, authState.currentUser!.id);
+                      },
+                      padding: EdgeInsets.zero,
+                      child: const Icon(
+                        Icons.bookmark_remove,
+                        size: 40,
+                      ),
+                    ),
                   );
                 },
               ),

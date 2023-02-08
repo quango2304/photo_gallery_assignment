@@ -89,9 +89,11 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
                   return PhotoListWidget(
                     controller: controller,
                     photos: photos,
-                    onPressBookMark: (photo) {
-                      bookmarksBloc.saveBookmark(photo, authState.currentUser!.id);
-                    },
+                    bookmarkIcon: (photo) => CupertinoButton(
+                      onPressed: () {
+                        bookmarksBloc.saveBookmark(photo, authState.currentUser!.id);
+                      }, padding: EdgeInsets.zero,
+                      child: const Icon(Icons.bookmark_add, size: 40,),),
                   );
                 },
               ),
