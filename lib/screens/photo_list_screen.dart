@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:photo_gallery_assignment/blocs/auth_cubit/auth_cubit.dart';
+import 'package:photo_gallery_assignment/blocs/bookmarks_cubit/bookmarks_cubit.dart';
 import 'package:photo_gallery_assignment/blocs/photo_cubit/photo_cubit.dart';
+import 'package:photo_gallery_assignment/screens/bookmarks_screen.dart';
 import 'package:photo_gallery_assignment/widgets/photo_list_widget.dart';
 
 class PhotoListScreen extends StatefulWidget {
@@ -14,15 +17,35 @@ class PhotoListScreen extends StatefulWidget {
 
 class _PhotoListScreenState extends State<PhotoListScreen> {
   final photosBloc = PhotoCubit();
+  final bookmarksBloc = BookmarksCubit();
   late final ScrollController controller;
   final paddingHorizontal = 16.0;
 
   @override
   void initState() {
     super.initState();
-    controller = ScrollController()
-      ..addListener(_scrollListener);
+    controller = ScrollController()..addListener(_scrollListener);
     photosBloc.loadPhotos();
+  }
+
+  void _showUserInfoActionSheet(GoogleSignInAccount user) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (_) => CupertinoActionSheet(
+        title: Text('${user.displayName}'),
+        message: Text(user.email),
+        actions: <CupertinoActionSheetAction>[
+          CupertinoActionSheetAction(
+            isDestructiveAction: true,
+            onPressed: () {
+              Navigator.of(context).pop();
+              context.read<AuthCubit>().signOut();
+            },
+            child: const Text('Sign out'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -31,24 +54,45 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
       builder: (context, authState) {
         return CupertinoPageScaffold(
           navigationBar: CupertinoNavigationBar(
-            leading: Text('${authState.currentUser?.email}'),
-            trailing: GestureDetector(
-              child: const Text('Sign out', style: TextStyle(color: Colors.blue),),
-              onTap: () {
-                context.read<AuthCubit>().signOut();
+            leading: CupertinoButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  _showUserInfoActionSheet(authState.currentUser!);
+                },
+                child: const Text('Account')),
+            trailing: CupertinoButton(
+              padding: EdgeInsets.zero,
+              child: const Text(
+                'Bookmarks',
+              ),
+              onPressed: () {
+                Navigator.of(context).push(CupertinoPageRoute(builder: (_) => const BookmarksScreen()));
               },
             ),
           ),
           child: SafeArea(
-            child: BlocProvider.value(
-              value: photosBloc,
+            child: MultiBlocProvider(
+              providers: [
+                BlocProvider.value(
+                  value: photosBloc,
+                ),
+                BlocProvider.value(
+                  value: bookmarksBloc,
+                ),
+              ],
               child: BlocBuilder<PhotoCubit, PhotosState>(
                 builder: (_, photosState) {
                   final photos = photosState.photos;
                   if (photos.isEmpty) {
-                    return const Text("Loading your photo");
+                    return const Center(child: CupertinoActivityIndicator());
                   }
-                  return PhotoListWidget(controller: controller, photos: photos,);
+                  return PhotoListWidget(
+                    controller: controller,
+                    photos: photos,
+                    onPressBookMark: (photo) {
+                      bookmarksBloc.saveBookmark(photo, authState.currentUser!.id);
+                    },
+                  );
                 },
               ),
             ),
@@ -68,6 +112,7 @@ class _PhotoListScreenState extends State<PhotoListScreen> {
   void dispose() {
     controller.removeListener(_scrollListener);
     photosBloc.close();
+    bookmarksBloc.close();
     super.dispose();
   }
 }

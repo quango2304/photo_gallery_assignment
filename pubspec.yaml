@@ -44,6 +44,9 @@ dependencies:
   injectable:
   get_it:
   google_sign_in:
+  firebase_database:
+  firebase_core:
+  uuid:
 
 dev_dependencies:
   flutter_test:

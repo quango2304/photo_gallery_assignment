@@ -13,9 +13,8 @@ class CheckAuthScreen extends StatefulWidget {
 }
 
 class CheckAuthScreenState extends State<CheckAuthScreen> {
-  final authCubit = AuthCubit();
-
   Widget _buildBody() {
+    final authCubit = context.read<AuthCubit>();
     return BlocBuilder<AuthCubit, AuthState>(builder: (_, authState) {
       final user = authState.currentUser;
       if (user != null) {
@@ -27,7 +26,7 @@ class CheckAuthScreenState extends State<CheckAuthScreen> {
           ),
           child: SafeArea(
             child: Center(
-              child: ElevatedButton(
+              child: CupertinoButton.filled(
                 onPressed: () => authCubit.signIn(),
                 child: const Text('SIGN IN WITH GOOGLE'),
               ),
@@ -41,12 +40,9 @@ class CheckAuthScreenState extends State<CheckAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: authCubit,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints.expand(),
-        child: _buildBody(),
-      ),
+    return ConstrainedBox(
+      constraints: const BoxConstraints.expand(),
+      child: _buildBody(),
     );
   }
 }

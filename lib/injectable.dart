@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
@@ -20,4 +21,6 @@ abstract class RegisterModule {
       'email',
     ],
   );
+
+  FirebaseDatabase get firebaseDatabase => FirebaseDatabase.instance;
 }
