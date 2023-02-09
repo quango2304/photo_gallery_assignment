@@ -5,9 +5,9 @@ API.
 
 ## Key Features
 
-- Support for high-resolution photo viewing
+- Support for high-resolution photo viewing with infinite scroll
 - Support google sign in
-- Support save photo to bookmarks (which is sync to firebase database)
+- Support save photos to bookmark, remove photos from bookmark (which is sync to firebase database)
 - Dependencies injection for lose coupling so will easy to write unit tests
 
 ## Note
