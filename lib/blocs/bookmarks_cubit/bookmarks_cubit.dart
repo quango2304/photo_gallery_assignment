@@ -12,18 +12,32 @@ class BookmarksCubit extends Cubit<BookmarksState> {
   BookmarksRepositoryProtocol get photoRepository => getIt.get<BookmarksRepositoryProtocol>();
 
   void getBookmarks(String userId) async {
-    final bookmarks = await photoRepository.getBookmarks(userId);
-    emit(BookmarksUpdated(bookmarks ?? []));
+    try {
+      final bookmarks = await photoRepository.getBookmarks(userId);
+      emit(BookmarksUpdated(bookmarks ?? []));
+    } catch (e, s) {
+      print("error when getBookmarks $e $s");
+    }
   }
 
   void saveBookmark(PhotoModel photo, String userId) async {
-    final bookMarkId = await photoRepository.saveBookmark(photo, userId);
-    emit(BookmarksUpdated(
-        [...state.bookmarks, BookmarkModel(url: photo.url, width: photo.width, height: photo.height, id: bookMarkId)]));
+    try {
+      final bookMarkId = await photoRepository.saveBookmark(photo, userId);
+      emit(BookmarksUpdated([
+        ...state.bookmarks,
+        BookmarkModel(url: photo.url, width: photo.width, height: photo.height, id: bookMarkId)
+      ]));
+    } catch (e, s) {
+      print("error when saveBookmark $e $s");
+    }
   }
 
   void removeBookmark(BookmarkModel bookmarkModel, String userId) async {
-    await photoRepository.removeBookmark(bookmarkModel, userId);
-    emit(BookmarksUpdated(state.bookmarks..removeWhere((element) => element.id == bookmarkModel.id)));
+    try {
+      await photoRepository.removeBookmark(bookmarkModel, userId);
+      emit(BookmarksUpdated(state.bookmarks..removeWhere((element) => element.id == bookmarkModel.id)));
+    } catch (e, s) {
+      print("error when removeBookmark $e $s");
+    }
   }
 }

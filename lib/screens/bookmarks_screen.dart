@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:photo_gallery_assignment/blocs/auth_cubit/auth_cubit.dart';
 import 'package:photo_gallery_assignment/blocs/bookmarks_cubit/bookmarks_cubit.dart';
-import 'package:photo_gallery_assignment/blocs/photo_cubit/photo_cubit.dart';
 import 'package:photo_gallery_assignment/models/bookmark_model.dart';
 import 'package:photo_gallery_assignment/widgets/photo_list_widget.dart';
 
@@ -45,7 +43,7 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                 builder: (_, bookmarksState) {
                   final bookmarks = bookmarksState.bookmarks;
                   if (bookmarks.isEmpty) {
-                    return Center(child: CupertinoActivityIndicator());
+                    return const Center(child: CupertinoActivityIndicator());
                   }
                   return PhotoListWidget(
                     photos: bookmarks,

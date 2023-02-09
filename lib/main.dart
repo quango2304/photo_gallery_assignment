@@ -1,11 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:photo_gallery_assignment/blocs/auth_cubit/auth_cubit.dart';
 import 'package:photo_gallery_assignment/injectable.dart';
 import 'package:photo_gallery_assignment/screens/check_auth_screen.dart';
-import 'package:photo_gallery_assignment/screens/photo_list_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,9 +20,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthCubit(),
-      child: CupertinoApp(
+      child: const CupertinoApp(
         title: 'Flutter Photo Gallery',
-        home: const CheckAuthScreen(),
+        home: CheckAuthScreen(),
       ),
     );
   }

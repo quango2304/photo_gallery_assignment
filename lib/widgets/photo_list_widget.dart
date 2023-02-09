@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fade_shimmer/fade_shimmer.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_gallery_assignment/models/photo_model.dart';
 import 'package:photo_gallery_assignment/screens/photo_detail_screen.dart';

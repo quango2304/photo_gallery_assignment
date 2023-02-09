@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:photo_gallery_assignment/blocs/auth_cubit/auth_cubit.dart';
 import 'package:photo_gallery_assignment/screens/photo_list_screen.dart';
 
