@@ -14,7 +14,7 @@ API.
 
 At this time, users can only view photos from the public API. Future updates will allow for photo uploads, photo sharing
 and storage.
-
+    
 ## Tech stacks:
 
 - Flutter
@@ -22,6 +22,6 @@ and storage.
 
 ## Screenshots:
 
-![](1.png)
-![](2.png)
-![](3.png)
+![](screenshots/1.png)
+![](screenshots/2.png)
+![](screenshots/3.png)
